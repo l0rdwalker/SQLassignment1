@@ -1,2 +1,2 @@
 FROM epic SELECT *
-WHERE epiness = 100
+WHERE epicness = 100
