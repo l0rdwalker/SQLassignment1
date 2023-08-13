@@ -1,0 +1,98 @@
+CREATE TABLE Student (
+  studentId INTEGER NOT NULL,
+  name      VARCHAR(20) NOT NULL,
+  address   VARCHAR(50),
+  age       INTEGER,
+  PRIMARY KEY (studentId)
+);
+
+CREATE TABLE UnitOfStudy (
+  uosCode CHAR(8) NOT NULL,
+  deptId  CHAR(3) NOT NULL,
+  uosName VARCHAR(40) NOT NULL,
+  credits INTEGER NOT NULL,
+  PRIMARY KEY (uosCode)
+);
+
+CREATE TABLE Enrolled (
+  studentId INTEGER NOT NULL,
+  uosCode   CHAR(8) NOT NULL,
+  semester  CHAR(2) NOT NULL,
+  year      INTEGER NOT NULL,
+  grade     VARCHAR(2),
+  PRIMARY KEY (studentId, uosCode, semester, year),
+  FOREIGN KEY (studentId) REFERENCES Student(studentId),
+  FOREIGN KEY (uosCode) REFERENCES UnitOfStudy(uosCode)
+);
+
+/* Add some students. The following data is completely arbitrary. Any similarities to actual students is purely accidential.  */
+INSERT INTO Student VALUES (307088592, 'John Smith', 'Newtown', 19);
+INSERT INTO Student VALUES (305422153, 'Sally Waters', 'Coogee', 22);
+INSERT INTO Student VALUES (305678453, 'Pauline Winters', 'Bondi', 20);
+INSERT INTO Student VALUES (316424328, 'Matthew Long', 'Camperdown', 19);
+INSERT INTO Student VALUES (309145324, 'Victoria Tan', 'Maroubra', 23);
+INSERT INTO Student VALUES (309187546, 'Niang Jin Phan', 'Kingsford', 18);
+
+/* Add some units of study. Note that older ones are only worth 3cp. */
+INSERT INTO UnitOfStudy  VALUES ('INFO1003', 'SIT', 'Introduction to IT', 6);
+INSERT INTO UnitOfStudy  VALUES ('INFO2120', 'SIT', 'Database Systems I', 6);
+INSERT INTO UnitOfStudy  VALUES ('INFO3404', 'SIT', 'Database Systems II', 6);
+INSERT INTO UnitOfStudy  VALUES ('COMP5046', 'SIT', 'Statistical Natural Language Processing', 6);
+INSERT INTO UnitOfStudy  VALUES ('COMP5138', 'SIT', 'Database Management Systems', 6);
+INSERT INTO UnitOfStudy  VALUES ('COMP5338', 'SIT', 'Advanced Data Models', 6);
+INSERT INTO UnitOfStudy  VALUES ('INFO2005', 'SIT', 'Database Management Introductory', 3);
+INSERT INTO UnitOfStudy  VALUES ('INFO3005', 'SIT', 'Organisational Database Systems', 3);
+INSERT INTO UnitOfStudy  VALUES ('MATH1002', 'MAT', 'Linear Algebra', 3);
+INSERT INTO UnitOfStudy  VALUES ('COMP5703', 'SIT', 'Information Technology Project', 12);
+
+/* Add some dummy transcripts. */
+INSERT INTO Enrolled VALUES (316424328, 'INFO2120', 'S1', 2010, 'D');
+INSERT INTO Enrolled VALUES (305678453, 'INFO2120', 'S1', 2010, 'HD');
+INSERT INTO Enrolled VALUES (316424328, 'INFO3005', 'S1', 2005, 'CR');
+INSERT INTO Enrolled VALUES (305422153, 'INFO3404', 'S2', 2008, 'P');
+INSERT INTO Enrolled VALUES (316424328, 'COMP5338', 'S1', 2006, 'D');
+INSERT INTO Enrolled VALUES (309145324, 'INFO2120', 'S1', 2010, 'F');
+INSERT INTO Enrolled VALUES (309187546, 'INFO2005', 'S2', 2004, 'D');
+
+
+SELECT * FROM Student WHERE studentID = 309187546;
+
+SELECT Student.name,Enrolled.uosCode FROM Student INNER JOIN Enrolled ON Student.studentId = Enrolled.studentId 
+
+SELECT Enrolled.studentId,Enrolled.grade FROM Enrolled WHERE uosCode = 'INFO2120'; 
+
+SELECT MAX(age) FROM Student;
+SELECT MIN(age) FROM Student;
+SELECT AVG(age) FROM Student;
+SELECT SUM(age) FROM Student;
+
+INSERT INTO Language(name, language_id) VALUES ('Dutch', 4);
+UPDATE Country SET name= 'Confoederatio Helvetica' WHERE short_code = 'CH';
+DELETE FROM Language WHERE name = 'German';
+UPDATE Film SET rental_rate = rental_rate * 1.2 WHERE title = 'ANGELS LIFE';
+
+CREATE TABLE Continent (
+   id   INTEGER     PRIMARY KEY,
+   name VARCHAR(50) NOT NULL
+);
+CREATE TABLE Mountain (
+   name      VARCHAR(50) PRIMARY KEY,
+   continent INTEGER     REFERENCES Continent(id)
+);
+INSERT INTO Continent VALUES (1, 'Asia');
+INSERT INTO Mountain  VALUES ('Mount Everest', 1);
+
+CREATE TABLE Person (
+   license INT PRIMARY KEY,
+   name VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE Car (
+    regno character(6) PRIMARY KEY,
+    model VARCHAR(30),
+    driver INT,
+    FOREIGN KEY (driver) REFERENCES Person(license)
+);
+
+
+
