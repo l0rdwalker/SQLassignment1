@@ -10,11 +10,16 @@ CREATE TABLE Meeting (
     Duration int not NULL
 );/*Maybe change Duration to EndTime?s*/
 
+CREATE TABLE Contact (
+    StudentID INTEGER NOT NULL,
+    Email VARCHAR(50)
+    FOREIGN KEY (StudentID) REFERENCES Student(StudentID)
+)
+
 CREATE TABLE Competition (
     EndDate DATETIME NOT NULL,
     Prize VARCHAR(250)
 );
-
 
 CREATE TABLE Club (
     ClubName VARCHAR(20),
