@@ -96,3 +96,5 @@ CREATE TABLE Car (
 
 
 
+CREATE USER your_username WITH PASSWORD 'your_password';
+GRANT CONNECT ON DATABASE your_database TO your_username;
