@@ -28,11 +28,21 @@ CREATE TABLE Competition (
     PRIMARY KEY (CompID)
 );
 
+CREATE TABLE idList(
+    idofIDList
+    StudentID INTEGER NOT NULL,
+    ClubID VARCHAR(50),
+
+    FOREIGN KEY (StudentID) REFERENCES Student(StudentID),
+    FOREIGN KEY (ClubID) REFERENCES Club(ClubName)
+);
+
 CREATE TABLE Club (
     ClubName VARCHAR(50) NOT NULL,
     Abbreviation VARCHAR(10),
     AGMDate TIMESTAMP,
-    PRIMARY KEY (ClubName)
+    PRIMARY KEY (ClubName)'
+    '
 );
 
 CREATE TABLE Contact (
@@ -42,5 +52,11 @@ CREATE TABLE Contact (
 );
 
 
-clubID
-studentID
+
+DROP TABLE IF EXISTS Contact;
+DROP TABLE IF EXISTS Competition;
+DROP TABLE IF EXISTS Meeting;
+DROP TABLE IF EXISTS Student;
+DROP TABLE IF EXISTS Activity;
+DROP TABLE IF EXISTS Club;
+DROP TABLE IF EXISTS idList;
