@@ -14,12 +14,18 @@ CREATE TABLE Student (
 
 CREATE TABLE Meeting (
     StartTime TIMESTAMP NOT NULL,
-    Duration TIME NOT NULL
-);/*Maybe change Duration to EndTime?s*/
+    Duration TIME NOT NULL,
+    MeetingID VARCHAR(50) NOT NULL,
+    FOREIGN KEY (MeetingID) REFERENCES Activity(AName),
+    PRIMARY KEY (MeetingID)
+);
 
 CREATE TABLE Competition (
     EndDate TIMESTAMP NOT NULL,
-    Prize VARCHAR(250)
+    Prize VARCHAR(250),
+    CompID VARCHAR(50) NOT NULL,
+    FOREIGN KEY (CompID) REFERENCES Activity(AName),
+    PRIMARY KEY (CompID)
 );
 
 CREATE TABLE Club (
@@ -33,4 +39,8 @@ CREATE TABLE Contact (
     StudentID INTEGER NOT NULL,
     Email VARCHAR(50),
     FOREIGN KEY (StudentID) REFERENCES Student(StudentID)
-)
+);
+
+
+clubID
+studentID
