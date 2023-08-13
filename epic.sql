@@ -31,6 +31,6 @@ CREATE TABLE Club (
 
 CREATE TABLE Contact (
     StudentID INTEGER NOT NULL,
-    Email VARCHAR(50)
+    Email VARCHAR(50),
     FOREIGN KEY (StudentID) REFERENCES Student(StudentID)
 )
