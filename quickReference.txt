@@ -98,3 +98,52 @@ CREATE TABLE Car (
 
 CREATE USER your_username WITH PASSWORD 'your_password';
 GRANT CONNECT ON DATABASE your_database TO your_username;
+
+
+-- Drop tables in reverse order due to foreign key dependencies
+
+DROP TABLE IF EXISTS Contact;
+DROP TABLE IF EXISTS Competition;
+DROP TABLE IF EXISTS Meeting;
+DROP TABLE IF EXISTS Student;
+DROP TABLE IF EXISTS Activity;
+DROP TABLE IF EXISTS Club;
+
+
+CREATE TABLE Professor (
+    professorID INTEGER,
+    profName VARCHAR(20),
+    PRIMARY KEY (professorID)
+);
+
+CREATE TABLE UnitOfStudy (
+    uosCode CHAR(8),
+    title VARCHAR(80),
+    credit_pts INTEGER,
+    taughtBy INTEGER,  -- Remove the DEFAULT value here
+    PRIMARY KEY (uosCode),
+    FOREIGN KEY (taughtBy) REFERENCES Professor (professorID) ON UPDATE CASCADE ON DELETE SET DEFAULT
+);
+
+INSERT INTO Professor VALUES (44332211, 'William Walker');
+INSERT INTO Professor VALUES (11223344, 'Alex Ginnus');
+
+INSERT INTO UnitOfStudy VALUES (66778899,'Intro Programing',12,44332211);
+INSERT INTO UnitOfStudy VALUES (99887766,'Computer Essentials',6,11223344);
+
+SELECT * FROM Professor;
+SELECT * FROM UnitOfStudy;
+
+UPDATE Professor SET professorID= 54321 WHERE profName = 'William Walker';
+
+SELECT * FROM Professor;
+SELECT * FROM UnitOfStudy;
+
+DELETE FROM Professor WHERE profName = 'William Walker';
+
+SELECT * FROM Professor;
+SELECT * FROM UnitOfStudy;
+
+-- Drop tables when done
+DROP TABLE IF EXISTS UnitOfStudy;
+DROP TABLE IF EXISTS Professor;
