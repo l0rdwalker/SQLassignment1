@@ -23,26 +23,18 @@ CREATE TABLE Meeting (
 CREATE TABLE Competition (
     EndDate TIMESTAMP NOT NULL,
     Prize VARCHAR(250),
-    CompID VARCHAR(50) NOT NULL,
-    FOREIGN KEY (CompID) REFERENCES Activity(AName),
-    PRIMARY KEY (CompID)
-);
-
-CREATE TABLE idList(
-    idofIDList
-    StudentID INTEGER NOT NULL,
-    ClubID VARCHAR(50),
-
-    FOREIGN KEY (StudentID) REFERENCES Student(StudentID),
-    FOREIGN KEY (ClubID) REFERENCES Club(ClubName)
+    CompName VARCHAR(50) NOT NULL,
+    FOREIGN KEY (CompName) REFERENCES Activity(AName),
+    PRIMARY KEY (CompName)
 );
 
 CREATE TABLE Club (
     ClubName VARCHAR(50) NOT NULL,
     Abbreviation VARCHAR(10),
     AGMDate TIMESTAMP,
-    PRIMARY KEY (ClubName)'
-    '
+    PresidentId INTEGER NOT NULL,
+    FOREIGN KEY (PresidentId) REFERENCES Student(StudentID)
+    PRIMARY KEY (ClubName)
 );
 
 CREATE TABLE Contact (
@@ -51,7 +43,48 @@ CREATE TABLE Contact (
     FOREIGN KEY (StudentID) REFERENCES Student(StudentID)
 );
 
+-- relationships --
 
+CREATE TABLE RunBy (
+    ClubName VARCHAR(50) NOT NULL,
+    AName VARCHAR(50) NOT NULL,
+    FOREIGN KEY (ClubName) REFERENCES Club(ClubName),
+    FOREIGN KEY (AName) REFERENCES Activity(AName),
+    PRIMARY KEY (AName)
+);
+
+CREATE TABLE BelongsTo (
+    StudentID INTEGER NOT NULL,
+    ClubName VARCHAR(50) NOT NULL,
+    FOREIGN KEY (StudentID) REFERENCES Student(StudentID),
+    FOREIGN KEY (ClubName) REFERENCES Activity(ClubName),
+    PRIMARY KEY (StudentID, ClubName)
+);
+
+CREATE TABLE TakesPart(
+    StudentID INTEGER NOT NULL,
+    AName VARCHAR(50) NOT NULL,
+    FOREIGN KEY (StudentID) REFERENCES Student(StudentID),
+    FOREIGN KEY (AName) REFERENCES Activity(AName),
+    PRIMARY KEY (StudentID, AName)
+);
+
+CREATE TABLE WinnerOf(
+    CompName VARCHAR(50) NOT NULL,
+    StudentID INTEGER NOT NULL,     -- null or not null? cuz there could be 0 winner
+    FOREIGN KEY (CompName) REFERENCES Competition(CompName),
+    FOREIGN KEY (StudentID) REFERENCES Student(StudentID),
+    PRIMARY KEY (Competition)
+);
+
+-- CREATE TABLE idList(
+--     idofIDList
+--     StudentID INTEGER NOT NULL,
+--     ClubID VARCHAR(50),
+
+--     FOREIGN KEY (StudentID) REFERENCES Student(StudentID),
+--     FOREIGN KEY (ClubID) REFERENCES Club(ClubName)
+-- );
 
 DROP TABLE IF EXISTS Contact;
 DROP TABLE IF EXISTS Competition;
