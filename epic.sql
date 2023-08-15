@@ -1,3 +1,14 @@
+DO $$ 
+DECLARE 
+    tableName text;
+BEGIN
+    FOR tableName IN (SELECT table_name FROM information_schema.tables WHERE table_schema = 'public' AND table_type = 'BASE TABLE') 
+    LOOP
+        EXECUTE 'DROP TABLE IF EXISTS ' || tableName || ' CASCADE;';
+    END LOOP;
+END $$;
+
+
 CREATE TABLE Student (
   StudentID INTEGER NOT NULL,
   StudentName VARCHAR(50) NOT NULL,
@@ -20,11 +31,11 @@ CREATE TABLE PresidentOF (
 
 CREATE TABLE BelongsTo (
     Student INTEGER,
-    Club VARCHAR(50),
+    ClubName VARCHAR(50),
     JoinDate DATE NOT NULL,
     FOREIGN KEY (Student) REFERENCES Student(StudentID), 
-    FOREIGN KEY (Club) REFERENCES Club(ClubName),
-    PRIMARY KEY (Student,Club)
+    FOREIGN KEY (ClubName) REFERENCES Club(ClubName),
+    PRIMARY KEY (Student,ClubName)
 );
 
 CREATE TABLE Activity (
@@ -54,7 +65,7 @@ CREATE TABLE TakesPart (
     ClubName VARCHAR(50),
     PRIMARY KEY (StudentID,ClubName),
     FOREIGN KEY (StudentID) REFERENCES Student(StudentID), 
-    FOREIGN KEY (ClubName) REFERENCES Student(ClubName)
+    FOREIGN KEY (ClubName) REFERENCES Club(ClubName)
 );
 
 CREATE TABLE Meeting (
@@ -78,10 +89,7 @@ CREATE TABLE Contact (
     FOREIGN KEY (StudentID) REFERENCES Student(StudentID)
 );
 
-DROP TABLE IF EXISTS Contact;
-DROP TABLE IF EXISTS Competition;
-DROP TABLE IF EXISTS Meeting;
-DROP TABLE IF EXISTS Student;
-DROP TABLE IF EXISTS Activity;
-DROP TABLE IF EXISTS Club;
-DROP TABLE IF EXISTS idList;
+SELECT table_name
+FROM information_schema.tables
+WHERE table_schema = 'public' -- You might need to adjust the schema name if it's different
+AND table_type = 'BASE TABLE';
