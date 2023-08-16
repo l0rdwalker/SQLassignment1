@@ -88,7 +88,7 @@ CREATE TABLE Club (
     Abbreviation VARCHAR(10),
     AGMDate TIMESTAMP,
     PresidentId INTEGER NOT NULL,
-    FOREIGN KEY (PresidentId) REFERENCES Student(StudentID)
+    FOREIGN KEY (PresidentId) REFERENCES Student(StudentID),
     PRIMARY KEY (ClubName)
 );
 
