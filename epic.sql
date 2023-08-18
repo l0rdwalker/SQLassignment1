@@ -10,7 +10,7 @@ END $$;
 
 
 CREATE TABLE Student (
-  StudentID INTEGER NOT NULL,
+  StudentID INTEGER,
   StudentName VARCHAR(50) NOT NULL,
   Email VARCHAR(50) UNIQUE,
   PRIMARY KEY (StudentID)
